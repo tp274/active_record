@@ -1,6 +1,6 @@
 <?php
 
-class todo {
+class Todo {
 	public $id;
 	public $ownerEmail;
 	public $ownerId;
