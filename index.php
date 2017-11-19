@@ -18,14 +18,15 @@ spl_autoload_register(array('Manage', 'autoload'));
 //include config file with db information
 
 require('./phpconfig.php');
-$records = Accounts :: findAll();
-Html :: getHeaderMessage('All records from Accounts:');
-AccountRenderer :: displayRecords($records);
 
 Html :: getHeaderMessage('Record from Accounts for ID = 1');
 $id = 1;
 $record = Accounts :: getAccountsById($id);
 AccountRenderer :: displayRecords($record);
+
+$records = Accounts :: findAll();
+Html :: getHeaderMessage('All records from Accounts:');
+AccountRenderer :: displayRecords($records);
 
 $todo = new Todo();
 $todo->ownerEmail = 'test@yahoo.com' ;
