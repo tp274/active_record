@@ -5,29 +5,28 @@ class todos extends collection {
 
 	static public function save($todo){
 	  $conn = dbConnection::getConnection();
-	  $tableName = get_called_class();
 	  if(isset($todo->id)){
-	    self :: update($todo,$conn,$tableName);
+	    self :: update($todo,$conn);
 	  }else {
-	    self :: insert($todo,$conn,$tableName);
+	    return self :: insert($todo,$conn);
 	  }
 	}
 
 	
-	static public function update($todo,$conn,$tableName){
+	static public function update($todo,$conn){
+	 $tableName = get_called_class();
 	 $sql = 'UPDATE ' . $tableName. '  set  owneremail = :owneremail,ownerid = :ownerid,createddate=:createddate,
 	         duedate=:duedate,message= :message,isdone=:isdone  where id = :id';
-echo $sql;
 	try{
 	$conn->beginTransaction();  
 	$update = $conn -> prepare($sql);
 	$update -> bindValue (':id', $todo->id);
-	$update -> bindValue(':owneremail', $todo->ownerEmail);
-	$update -> bindValue(':ownerid', $todo->ownerId);
-	$update -> bindValue(':createddate', $todo->createdDate);
-	$update -> bindValue(':duedate', $todo->dueDate);
+	$update -> bindValue(':owneremail', $todo->owneremail);
+	$update -> bindValue(':ownerid', $todo->ownerid);
+	$update -> bindValue(':createddate', $todo->createddate);
+	$update -> bindValue(':duedate', $todo->duedate);
 	$update -> bindValue(':message', $todo->message);
-	$update -> bindValue(':isdone', $todo->isDone);
+	$update -> bindValue(':isdone', $todo->isdone);
 	$update -> execute();
 	print "Updated Successfully"; 
 	$conn-> commit();
@@ -37,21 +36,24 @@ echo $sql;
 	} 
    }
 
-	static public function insert($todo,$conn,$tableName){
+	static public function insert($todo,$conn){
+	  $tableName = get_called_class();
           $sql = 'INSERT INTO ' . $tableName. '   (owneremail,ownerid,createddate,duedate,message,isdone) VALUES
   	   (:owneremail,:ownerid,:createddate,:duedate,:message,:isdone)';
 	  try{
 	    $conn->beginTransaction();  
 	    $update = $conn -> prepare($sql);
-	    $update -> bindValue(':owneremail', $todo->ownerEmail);
-	    $update -> bindValue(':ownerid', $todo->ownerId);
-	    $update -> bindValue(':createddate', $todo->createdDate);
-	    $update -> bindValue(':duedate', $todo->dueDate);
+	    $update -> bindValue(':owneremail', $todo->owneremail);
+	    $update -> bindValue(':ownerid', $todo->ownerid);
+	    $update -> bindValue(':createddate', $todo->createddate);
+	    $update -> bindValue(':duedate', $todo->duedate);
 	    $update -> bindValue(':message', $todo->message);
-	    $update -> bindValue(':isdone',$todo->isDone);
+	    $update -> bindValue(':isdone',$todo->isdone);
 	    $update -> execute();
-	    print $conn->lastInsertId(); 
+	    $lastId = $conn->lastInsertId();
+	    print 'Record inserted successfully with id :'. $lastId; 
 	    $conn-> commit();
+	    return $lastId;
 	    }
 	   catch(PDOExecption $e) {
 	    $conn->rollback();	

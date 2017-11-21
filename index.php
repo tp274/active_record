@@ -20,30 +20,59 @@ spl_autoload_register(array('Manage', 'autoload'));
 require('./phpconfig.php');
 
 
-Html :: getHeaderMessage('Record from Accounts for ID = 1');
+Html :: getHeaderMessage('Record from accounts for ID = 1');
 $id = 1;
-$record = Accounts :: getAccountsById($id);
-AccountRenderer :: displayRecords($record);
+$record = Accounts :: fetchById($id);
+Htmltablerenderer :: displayTable($record);
+
+Html :: getHeaderMessage('Record from todos for ID = 1');
+$id = 1;
+$record = todos :: fetchById($id);
+Htmltablerenderer :: displayTable($record);
+
 
 $records = Accounts :: findAll();
-Html :: getHeaderMessage('All records from Accounts:');
-AccountRenderer :: displayRecords($records);
+Html :: getHeaderMessage('All records from accounts:');
+Htmltablerenderer :: displayTable($records);
 
 $records = todos :: findAll();
 Html :: getHeaderMessage('All records from todos:');
-#AccountRenderer :: displayRecords($records);
+Htmltablerenderer :: displayTable($records);
 
+//Updating record in todo
+$todo = new Todo();
+$todo->id = 3;
+$todo->owneremail = 'update1new@yahoo.com' ;
+$todo->ownerid = 2 ;
+$todo->createddate = '2017-01-01 00:00:00' ;
+$todo->duedate = '2017-02-01 00:00:00' ;
+$todo->message = 'test' ;
+$todo->isdone = 0;
+Html :: getHeaderMessage('Updated Record in todos ');
+todos :: save($todo);
 
 $todo = new Todo();
-#$todo->id = 17;
-$todo->ownerEmail = 'new@yahoo.com' ;
-$todo->ownerId = 2 ;
-$todo->createdDate = '2017-01-01 00:00:00' ;
-$todo->dueDate = '2017-02-01 00:00:00' ;
-$todo->message = 'test' ;
-$todo->isDone = 0;
-Html :: getHeaderMessage('Inserted Record in todos ');
+$todo->owneremail = 'test1@yahoo.com' ;
+$todo->ownerid = 3 ;
+$todo->createddate = '2017-04-01 00:00:00' ;
+$todo->duedate = '2017-05-01 00:00:00' ;
+$todo->message = 'test1' ;
+$todo->isdone = 0;
+Html :: getHeaderMessage('Added Record in todos ');
 todos :: save($todo);
+
+$todo = new Todo();
+$todo->owneremail = 'test2@yahoo.com' ;
+$todo->ownerid = 4 ;
+$todo->createddate = '2017-05-01 00:00:00' ;
+$todo->duedate = '2017-06-01 00:00:00' ;
+$todo->message = 'test2' ;
+$todo->isdone = 0;
+Html :: getHeaderMessage('Added Record in todos </br> ');
+$idToDelete = todos :: save($todo);
+
+
+
 //Can delete by id for accounts and todos
-#todos :: deleteById(16);
+todos :: deleteById($idToDelete);
 #Accounts :: deleteById(13);

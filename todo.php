@@ -2,12 +2,12 @@
 
 class Todo {
 	public $id;
-	public $ownerEmail;
-	public $ownerId;
-	public $createdDate;
-	public $dueDate;
+	public $owneremail;
+	public $ownerid;
+	public $createddate;
+	public $duedate;
 	public $message;
-	public $isDone;
+	public $isdone;
 
 
 }
