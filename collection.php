@@ -21,4 +21,18 @@ class collection {
 	return  $statement->fetchAll();
 	}
 
+	static public function deleteById($id) {
+	  $db = dbConnection::getConnection();
+	  $tableName = get_called_class();
+	  $sql = 'DELETE FROM ' . $tableName  . ' where id = :id';
+	  try {
+	     $statement = $db->prepare($sql);
+	     $statement->bindParam(':id',$id);
+	     $statement->execute();
+	     echo 'Record deleted Sucessfully';
+	     }catch (PDOException $e){
+	     echo 'Error while deleting the record';
+	  }
+	}
+
 } 
