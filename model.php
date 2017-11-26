@@ -13,8 +13,9 @@ protected $tableName;
 	  $db = dbConnection::getConnection();
 	  $statement = $db->prepare($sql);
 	  $array = get_object_vars($this);
-	  foreach (array_flip($array) as $key=>$value){
-	    $statement->bindParam(":$value", $this->$value);
+	  unset($array['tableName']);
+	  foreach ($array as $key=>$value){
+	    $statement->bindParam(":$key", $this->$key);
 	  }
 	  $statement->execute();
 	  $id = $db->lastInsertId();
@@ -25,8 +26,9 @@ protected $tableName;
 	  $modelName = get_called_class();
 	  $tableName = $modelName::getTablename();
 	  $array = get_object_vars($this);
-    	  $columnString = implode(',', array_flip($array));
-	  $valueString = ':'.implode(',:', array_flip($array));
+	   unset($array['tableName']);
+    	  $columnString = implode(',',array_keys($array));
+	  $valueString = ':'.implode(',:', array_keys($array));
           $sql =  'INSERT INTO '.$tableName.' ('.$columnString.') VALUES ('.$valueString.')';
 	  return $sql;
   	}
@@ -35,6 +37,7 @@ protected $tableName;
 	  $modelName=get_called_class();
 	  $tableName = $modelName::getTablename();
 	  $array = get_object_vars($this);
+	   unset($array['tableName']);
 	  $comma = " ";
 	  $sql = 'UPDATE '.$tableName.' SET ';
 	  foreach ($array as $key=>$value){
