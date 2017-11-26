@@ -21,6 +21,19 @@ class collection {
 	return  $statement->fetchAll();
 	}
 
+	static public function fetchById($id) {
+	  $db = dbConnection::getConnection();
+	  $tableName = get_called_class();
+	  $sql = 'SELECT * FROM ' . $tableName  . ' where id = :id';
+	  $statement = $db->prepare($sql);
+	  $statement->bindParam(':id',$id);
+	  $statement->execute();
+	  $class = static::$modelName;
+	  $statement->setFetchMode(PDO::FETCH_CLASS, $class);
+	  return  $statement->fetchAll();
+								            }
+
+
 	static public function deleteById($id) {
 	  $db = dbConnection::getConnection();
 	  $tableName = get_called_class();
@@ -29,7 +42,7 @@ class collection {
 	     $statement = $db->prepare($sql);
 	     $statement->bindParam(':id',$id);
 	     $statement->execute();
-	     echo 'Record deleted Sucessfully';
+	     echo 'Record deleted Sucessfully for Id :' .$id;
 	     }catch (PDOException $e){
 	     echo 'Error while deleting the record';
 	  }
