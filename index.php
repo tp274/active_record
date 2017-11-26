@@ -49,7 +49,7 @@ $todo->duedate = '2017-02-01 00:00:00' ;
 $todo->message = 'test' ;
 $todo->isdone = 0;
 Html :: getHeaderMessage('Updated Record in todos ');
-todos :: save($todo);
+$todo->save();
 
 $todo = new Todo();
 $todo->owneremail = 'test1@yahoo.com' ;
@@ -59,7 +59,7 @@ $todo->duedate = '2017-05-01 00:00:00' ;
 $todo->message = 'test1' ;
 $todo->isdone = 0;
 Html :: getHeaderMessage('Added Record in todos ');
-todos :: save($todo);
+$todo->save();
 
 $todo = new Todo();
 $todo->owneremail = 'test2@yahoo.com' ;
@@ -69,10 +69,10 @@ $todo->duedate = '2017-06-01 00:00:00' ;
 $todo->message = 'test2' ;
 $todo->isdone = 0;
 Html :: getHeaderMessage('Added Record in todos </br> ');
-$idToDelete = todos :: save($todo);
+$idToDelete = $todo->save();
+$records = todos :: findAll();
+Html :: getHeaderMessage('All records from todos after adding new records:');
+Htmltablerenderer :: displayTable($records);
 
-
-
-//Can delete by id for accounts and todos
 todos :: deleteById($idToDelete);
 #Accounts :: deleteById(13);
