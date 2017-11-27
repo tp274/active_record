@@ -120,11 +120,13 @@ $todo->isdone = 0;
 $idToDelete = $todo->save();
 
 Html :: getHeaderMessage('All records from todos after adding new records:');
+$records = todos :: findAll();
 Htmltablerenderer :: displayTable($records);
 
 //Deleting Record
 $todo-> deleteById($idToDelete);
 $records = todos :: findAll();
 Html :: getHeaderMessage('All records from todos after deleting the last record');
+$records = todos :: findAll();
 Htmltablerenderer :: displayTable($records);
 
