@@ -71,7 +71,7 @@ Html :: getHeaderMessage('All records from accounts after adding new records');
 Htmltablerenderer :: displayTable($records);
 
 //Deleting Record
-accounts :: deleteById($lastId);
+$account->deleteById($lastId);
 $records = Accounts :: findAll();
 Html :: getHeaderMessage('All records from accounts after deleting the last record');
 Htmltablerenderer :: displayTable($records);
@@ -123,7 +123,7 @@ Html :: getHeaderMessage('All records from todos after adding new records:');
 Htmltablerenderer :: displayTable($records);
 
 //Deleting Record
-todos :: deleteById($idToDelete);
+$todo-> deleteById($idToDelete);
 $records = todos :: findAll();
 Html :: getHeaderMessage('All records from todos after deleting the last record');
 Htmltablerenderer :: displayTable($records);

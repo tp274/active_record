@@ -51,15 +51,15 @@ protected $tableName;
 	}
 	
 	
-	static public function deleteById() {
+	static public function deleteById($id) {
 	  $db = dbConnection::getConnection();
-	  $tableName = get_called_class();
-	  $sql = 'DELETE FROM ' . $tableName  . ' where id = :id';
+	  $modelName=get_called_class();
+	  $tableName = $modelName::getTablename();
+	  $sql = 'DELETE FROM ' . $tableName  . ' where id = ' . $id;
 	  try {
 	     $statement = $db->prepare($sql);
-	     $statement->bindParam(':id',$this->id);
 	     $statement->execute();
-	     echo 'Record deleted Sucessfully for Id :' .$this->id;
+	     echo 'Record deleted Sucessfully for Id :' .$id;
 	     }catch (PDOException $e){
 	     echo 'Error while deleting the record';
 	  }

@@ -31,8 +31,7 @@ class collection {
 	  $class = static::$modelName;
 	  $statement->setFetchMode(PDO::FETCH_CLASS, $class);
 	  return  $statement->fetchAll();
-								            }
+        }
 
-
-
-} 
+}
+ 
