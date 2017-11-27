@@ -1,6 +1,6 @@
 <?php
 
-class Todo {
+class Todo extends model {
 	public $id;
 	public $owneremail;
 	public $ownerid;
@@ -9,5 +9,9 @@ class Todo {
 	public $message;
 	public $isdone;
 
+	public static function getTablename(){
+          $tableName='todos';
+	  return $tableName;
+	}
 
 }
